@@ -3,7 +3,7 @@ def print_task_number(number: int) -> None:
     print(f"Task{number}", end="")
     print("="*30)
 
-def norm(x: list[int], weights: list[int] | None = None) -> int:
+def w_norm(x: list[int], weights: list[int] | None = None) -> int:
     if weights is None:
         weights = [1/len(x)] * len(x)
 
@@ -25,6 +25,27 @@ def norm(x: list[int], weights: list[int] | None = None) -> int:
 
     for i, w in zip(x, weights):
         result += i * w
+
+    return result
+
+def norm(x: list[int], k: int):
+    if k <= 0:
+        raise ValueError("K must be greater than zero")
+
+    if int(k) != k:
+        raise TypeError("K must be integer")
+
+    result = 0
+    
+    for i in x:
+        result += i ** k
+
+    result **= 1/k
+
+    return result
+
+def inf_norm(x: list[int]):
+    result = max(map(abs, x))
 
     return result
 
@@ -50,10 +71,18 @@ def task_123():
     print(f"Vector Z sorted:\n({"; ".join(map(str, z))})")
 
     print_task_number(3)
-    print("Norm X:", norm(x))
-    print("Norm Y:", norm(y))
-    print("Norm Z:", norm(z))
-
+    print("Manhattan norm X:", norm(x, 1))
+    print("Manhattan norm Y:", norm(y, 1))
+    print("Manhattan norm Z:", norm(z, 1))
+    print("\n")
+    print("Euclidean norm X:", norm(x, 2))
+    print("Euclidean norm Y:", norm(y, 2))
+    print("Euclidean norm Z:", norm(z, 2))
+    print("\n")
+    print("Chebyshev norm X:", inf_norm(x))
+    print("Chebyshev norm Y:", inf_norm(y))
+    print("Chebyshev norm Z:", inf_norm(z))
+    
 def task_4():
     print_task_number(4)
     for i in range(10):
@@ -74,7 +103,7 @@ def task_5():
     x = read_vector(size, "vector")
     weights = read_vector(size, "weights")
 
-    n = norm(x, weights)
+    n = w_norm(x, weights)
 
     abs_x = list(map(abs, x))
     min_ele = min(abs_x)
