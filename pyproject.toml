@@ -1,0 +1,20 @@
+[project]
+name = "bd-2026-autumn"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Keendaj", email = "dimashevtsov05@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.3",
+]
+
+[project.scripts]
+bd-2026-autumn = "bd_2026_autumn:main"
+
+[build-system]
+requires = ["uv_build>=0.12.13,<0.13.0"]
+build-backend = "uv_build"

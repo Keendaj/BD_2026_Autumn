@@ -11,10 +11,10 @@ def w_norm(x: list[int], weights: list[int] | None = None) -> int:
         raise RuntimeError(f"Can't calculate norm with different dimensions {len(x)} vs {len(weights)}")
     
     if any(i < 0 for i in weights):
-        raise RuntimeError(f"Weights must be non negative: {weights}")
+        raise ValueError(f"Weights must be non negative: {weights}")
 
     if (sum(weights) == 0):
-        raise RuntimeError(f"Weights sum must be greater than zero")
+        raise ValueError(f"Weights sum must be greater than zero")
 
     if sum(weights) != 1:
         w_sum = sum(weights)
@@ -24,7 +24,7 @@ def w_norm(x: list[int], weights: list[int] | None = None) -> int:
     result = 0
 
     for i, w in zip(x, weights):
-        result += i * w
+        result += abs(i) * w
 
     return result
 
@@ -38,7 +38,7 @@ def norm(x: list[int], k: int):
     result = 0
     
     for i in x:
-        result += i ** k
+        result += abs(i) ** k
 
     result **= 1/k
 
@@ -74,25 +74,25 @@ def task_123():
     print("Manhattan norm X:", norm(x, 1))
     print("Manhattan norm Y:", norm(y, 1))
     print("Manhattan norm Z:", norm(z, 1))
-    print("\n")
+    print()
     print("Euclidean norm X:", norm(x, 2))
     print("Euclidean norm Y:", norm(y, 2))
     print("Euclidean norm Z:", norm(z, 2))
-    print("\n")
+    print()
     print("Chebyshev norm X:", inf_norm(x))
     print("Chebyshev norm Y:", inf_norm(y))
     print("Chebyshev norm Z:", inf_norm(z))
     
 def task_4():
     print_task_number(4)
-    for i in range(10):
+    for i in range(12):
         print(f"{i}! = {factorial(i)}")
 
 def read_vector(size: int, name: str) -> list[int]:
     result = []
 
     for i in range(size):
-        x = int(input(f"Enter {name} {i+1} element: "))
+        x = float(input(f"Enter {name} {i+1} element: "))
         result.append(x)
 
     return result
